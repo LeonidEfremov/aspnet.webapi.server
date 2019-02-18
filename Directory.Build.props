@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <PropertyGroup>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <LangVersion>Latest</LangVersion>
+    <NoWarn>$(NoWarn);</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VersionPrefix>1.0.0</VersionPrefix>
+    <PackageReleaseNotes></PackageReleaseNotes>
+    <ApplicationVersion>$(Version)</ApplicationVersion>
+    <PackageVersion>$(Version)</PackageVersion>
+    <VersionSuffix>$(VersionSuffix)</VersionSuffix>
+    <Company></Company>
+    <Authors>Loenid Efremov</Authors>
+    <Description>API Service base library for API Services.</Description>
+    <PackageTags>webapi;dotnet;server;swagger</PackageTags>
+    <IncludeSymbols>False</IncludeSymbols>
+    <PackageOutputPath>$(SolutionDir).packages</PackageOutputPath>
+    <RepositoryUrl>https://github.com/LeonidEfremov/AspNet.WebApi.Server.git</RepositoryUrl>
+    <PackageIconUrl>http://go.microsoft.com/fwlink/?LinkID=288859</PackageIconUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis" Version="2.10.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.NetCore.Analyzers" Version="2.6.3" PrivateAssets="All" />
+  </ItemGroup>
+</Project>
