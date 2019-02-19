@@ -18,6 +18,7 @@ namespace AspNet.WebApi.Server.Filters
         /// <inheritdoc />
         public void OnResultExecuted(ResultExecutedContext context)
         {
+            // Pass thru action
         }
     }
 }

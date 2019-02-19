@@ -24,8 +24,8 @@ namespace AspNet.WebApi.Server.Controllers
             base.NotFound(new NotFoundException(value.ToString()));
 
         /// <inheritdoc />
-        public override BadRequestObjectResult BadRequest(object value) =>
-            base.BadRequest(new BadRequestException(value.ToString()));
+        public override BadRequestObjectResult BadRequest(object error) =>
+            base.BadRequest(new BadRequestException(error.ToString()));
 
         /// <summary>Return <see cref="OkResult"/> for <paramref name="result"></paramref> true, otherwise return <see cref="UnprocessableEntityObjectResult"/></summary>
         /// <param name="result"></param>
