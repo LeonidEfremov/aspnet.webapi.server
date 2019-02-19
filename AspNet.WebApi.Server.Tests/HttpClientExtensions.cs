@@ -1,5 +1,6 @@
 ﻿using System.Net.Http;
 using System.Net.Http.Headers;
+using AspNet.WebApi.Common;
 
 namespace AspNet.WebApi.Server.Tests
 {

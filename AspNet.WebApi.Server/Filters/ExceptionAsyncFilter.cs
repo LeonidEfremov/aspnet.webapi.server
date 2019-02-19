@@ -1,9 +1,9 @@
-﻿using System.Threading.Tasks;
-using AspNet.WebApi.Server.Exceptions;
+﻿using AspNet.WebApi.Common.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using System.Threading.Tasks;
 
 namespace AspNet.WebApi.Server.Filters
 {
