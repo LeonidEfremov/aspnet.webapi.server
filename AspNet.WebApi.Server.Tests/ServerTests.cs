@@ -12,7 +12,7 @@ namespace AspNet.WebApi.Server.Tests
         public async Task<T> GetModelAsync<T>(HttpResponseMessage response)
         {
             var body = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<T>(body, _jsonSerializerSettings);
+            var result = JsonConvert.DeserializeObject<T>(body, JsonSerializerSettings);
 
             return await Task.FromResult(result);
         }

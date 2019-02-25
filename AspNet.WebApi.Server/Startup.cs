@@ -1,7 +1,4 @@
-﻿using System;
-using System.Globalization;
-using System.Reflection;
-using App.Metrics;
+﻿using App.Metrics;
 using App.Metrics.AspNetCore.Endpoints;
 using App.Metrics.AspNetCore.Health.Endpoints;
 using App.Metrics.Formatters.Ascii;
@@ -25,6 +22,9 @@ using NJsonSchema;
 using NSwag;
 using NSwag.AspNetCore;
 using NSwag.SwaggerGeneration.WebApi;
+using System;
+using System.Globalization;
+using System.Reflection;
 
 namespace AspNet.WebApi.Server
 {
@@ -120,6 +120,7 @@ namespace AspNet.WebApi.Server
             settings.Converters.Add(new StringEnumConverter());
             settings.StringEscapeHandling = StringEscapeHandling.EscapeHtml;
             settings.NullValueHandling = NullValueHandling.Ignore;
+            settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
         }
 
         /// <summary>Configure Metrics.</summary>

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 
@@ -11,10 +12,12 @@ namespace AspNet.WebApi.Server.Filters
     public class ExceptionAsyncFilter : IAsyncExceptionFilter
     {
         private readonly ILogger<ExceptionAsyncFilter> _logger;
+        private readonly JsonSerializerSettings _jsonSerializerSettings;
 
         /// <inheritdoc />
-        public ExceptionAsyncFilter(ILogger<ExceptionAsyncFilter> logger)
+        public ExceptionAsyncFilter(IOptions<MvcJsonOptions> jsonOptions, ILogger<ExceptionAsyncFilter> logger)
         {
+            _jsonSerializerSettings = jsonOptions.Value.SerializerSettings;
             _logger = logger;
         }
 
@@ -27,13 +30,9 @@ namespace AspNet.WebApi.Server.Filters
 
             context.ExceptionHandled = true;
 
-            var serializerSettings = new JsonSerializerSettings
-            {
-                NullValueHandling = NullValueHandling.Ignore
-            };
             var e = exception is ApiException apiException ? apiException : new ApiException(exception.Message, exception);
 
-            context.Result = new JsonResult(e, serializerSettings) { StatusCode = e.StatusCode };
+            context.Result = new JsonResult(e, _jsonSerializerSettings) { StatusCode = e.StatusCode };
             context.HttpContext.Response.StatusCode = e.StatusCode;
 
             await Task.CompletedTask;
