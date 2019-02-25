@@ -1,6 +1,6 @@
-﻿using System.Net.Http;
+﻿using Newtonsoft.Json;
+using System.Net.Http;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 
 namespace AspNet.WebApi.Server.Tests
 {
@@ -12,8 +12,8 @@ namespace AspNet.WebApi.Server.Tests
         public async Task<T> GetModelAsync<T>(HttpResponseMessage response)
         {
             var body = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<T>(body);
-            
+            var result = JsonConvert.DeserializeObject<T>(body, _jsonSerializerSettings);
+
             return await Task.FromResult(result);
         }
     }

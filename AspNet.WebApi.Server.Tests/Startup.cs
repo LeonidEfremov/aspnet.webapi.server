@@ -24,7 +24,7 @@ namespace AspNet.WebApi.Server.Tests
                 .AllowAnyHeader()
                 .AllowAnyMethod()
                 .SetIsOriginAllowedToAllowWildcardSubdomains()
-                .WithOrigins(TestsSetup._origin)
+                .WithOrigins(TestsSetup.Origin)
                 .Build();
     }
 }

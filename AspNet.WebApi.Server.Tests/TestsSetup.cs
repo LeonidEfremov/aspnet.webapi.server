@@ -1,19 +1,26 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.TestHost;
+using Newtonsoft.Json;
+using System;
 using System.Net.Http;
-using Microsoft.AspNetCore.TestHost;
 using Xunit;
 
 namespace AspNet.WebApi.Server.Tests
 {
     public abstract class TestsSetup : IClassFixture<TestsFixture>
     {
-        internal const string _origin = "https://api.server.test";
+        internal const string Origin = "https://api.server.test";
+        internal readonly JsonSerializerSettings _jsonSerializerSettings;
 
         internal HttpClient Client { get; }
 
         public TestsSetup(TestsFixture fixture)
         {
             Client = fixture.Client;
+
+            _jsonSerializerSettings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            };
         }
     }
 
@@ -36,8 +43,6 @@ namespace AspNet.WebApi.Server.Tests
         {
             Dispose(true);
             GC.SuppressFinalize(this);
-
-
         }
 
         protected virtual void Dispose(bool disposing)

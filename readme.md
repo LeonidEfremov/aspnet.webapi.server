@@ -37,7 +37,7 @@ public class Startup : Server.Startup { }
 2. `/swagger` show SwaggerUI API Reference Documentation
 3. `/redoc` show ReDoc API Reference Documentation
 3. `/health` executes the configured health checks and response with the result of each health check as well as an overall health status
-4. `/ping` used to determine if you can get a successful �pong� response with a 200 HTTP status code, useful for load balancers
+4. `/ping` used to determine if you can get a successful pong response with a 200 HTTP status code, useful for load balancers
 5. `/metrics` exposes a metrics snapshot using the configured metrics formatter
 6. `/metrics-text` exposes a metrics snapshot using the configured text formatter
 7. `/env` exposes environment information about the application e.g. OS, Machine Name, Assembly Name, Assembly Version etc.

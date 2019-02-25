@@ -34,6 +34,7 @@ namespace AspNet.WebApi.Server.Filters
             var e = exception is ApiException apiException ? apiException : new ApiException(exception.Message, exception);
 
             context.Result = new JsonResult(e, serializerSettings) { StatusCode = e.StatusCode };
+            context.HttpContext.Response.StatusCode = e.StatusCode;
 
             await Task.CompletedTask;
         }

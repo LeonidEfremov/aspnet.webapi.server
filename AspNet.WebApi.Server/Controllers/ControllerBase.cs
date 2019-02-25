@@ -26,18 +26,5 @@ namespace AspNet.WebApi.Server.Controllers
         /// <inheritdoc />
         public override BadRequestObjectResult BadRequest(object error) =>
             base.BadRequest(new BadRequestException(error.ToString()));
-
-        /// <summary>Return <see cref="OkResult"/> for <paramref name="result"></paramref> true, otherwise return <see cref="UnprocessableEntityObjectResult"/></summary>
-        /// <param name="result"></param>
-        /// <param name="model"></param>
-        /// <returns><see cref="IActionResult"/></returns>
-        protected IActionResult SetPropertyResult(bool result, object model) =>
-            result ? (IActionResult)Ok(model) : UnprocessableEntity(model);
-
-        /// <summary>Return <see cref="OkResult"/> for <paramref name="result"></paramref> true, otherwise return <see cref="UnprocessableEntityObjectResult"/></summary>
-        /// <param name="result"></param>
-        /// <returns><see cref="IActionResult"/></returns>
-        protected IActionResult DeleteResult(bool result) =>
-            result ? (IActionResult)Ok() : UnprocessableEntity();
     }
 }

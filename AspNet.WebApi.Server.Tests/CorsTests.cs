@@ -13,13 +13,13 @@ namespace AspNet.WebApi.Server.Tests
         {
             var client = Client.SetDefaultHeaders();
 
-            client.DefaultRequestHeaders.Add("Origin", _origin);
+            client.DefaultRequestHeaders.Add("Origin", Origin);
 
             var response = await client.GetAsync("/dataprovider?param=0");
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.True(response.Headers.Contains("Access-Control-Allow-Origin"));
-            Assert.Equal(_origin, response.Headers.GetValues("Access-Control-Allow-Origin").First());
+            Assert.Equal(Origin, response.Headers.GetValues("Access-Control-Allow-Origin").First());
             Assert.False(response.Headers.Contains("Access-Control-Allow-Credentials"));
         }
     }
