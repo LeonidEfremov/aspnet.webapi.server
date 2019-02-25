@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.TestHost;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System;
 using System.Net.Http;
@@ -9,18 +11,14 @@ namespace AspNet.WebApi.Server.Tests
     public abstract class TestsSetup : IClassFixture<TestsFixture>
     {
         internal const string Origin = "https://api.server.test";
-        internal readonly JsonSerializerSettings _jsonSerializerSettings;
-
+        
         internal HttpClient Client { get; }
+        internal JsonSerializerSettings JsonSerializerSettings { get; }
 
         public TestsSetup(TestsFixture fixture)
         {
             Client = fixture.Client;
-
-            _jsonSerializerSettings = new JsonSerializerSettings
-            {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-            };
+            JsonSerializerSettings = fixture.JsonSerializerSettings;
         }
     }
 
@@ -28,16 +26,19 @@ namespace AspNet.WebApi.Server.Tests
     {
         private readonly TestServer _server;
 
+        public HttpClient Client { get; }
+        public JsonSerializerSettings JsonSerializerSettings { get; }
+
         public TestsFixture()
         {
             var webHostBuilder = new Host().WebHostBuilder<Startup>(Array.Empty<string>());
 
             _server = new TestServer(webHostBuilder);
-
             Client = _server.CreateClient();
-        }
 
-        public HttpClient Client { get; }
+            var mvcJsonOptions = (IOptions<MvcJsonOptions>)_server.Host.Services.GetService(typeof(IOptions<MvcJsonOptions>));
+            JsonSerializerSettings = mvcJsonOptions.Value.SerializerSettings;
+        }
 
         public void Dispose()
         {
