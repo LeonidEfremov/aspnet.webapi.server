@@ -3,7 +3,7 @@
 [![Build Status](https://img.shields.io/appveyor/tests/LeonidEfremov/aspnet-webapi-server.svg?style=flat)](https://ci.appveyor.com/project/LeonidEfremov/aspnet-webapi-server/)
 [![SonarQube Coverage](https://img.shields.io/sonar/http/sonarcloud.io/AspNet.WebApi.Server/coverage.svg?style=flat)](https://sonarcloud.io/dashboard?id=AspNet.WebApi.Server)
 [![License](https://img.shields.io/github/license/LeonidEfremov/AspNet.WebApi.Server.svg?style=flat)](https://github.com/LeonidEfremov/aspnet.webapi.server/blob/master/license.md)
-
+[![Libraries.io dependency status](https://img.shields.io/librariesio/github/LeonidEfremov/aspnet.webapi.server.svg)](https://libraries.io/github/LeonidEfremov/aspnet.webapi.server)
 
 **Base library for .NET Core API services.**
 
