@@ -1,13 +1,45 @@
-﻿using System.Net;
+﻿using AspNet.WebApi.Common.Exceptions;
+using AspNet.WebApi.Server.Models;
+using System.IO;
+using System.Net;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading.Tasks;
-using AspNet.WebApi.Common.Exceptions;
 using Xunit;
+using Xunit.Asserts.Compare;
 
 namespace AspNet.WebApi.Server.Tests
 {
     /// <inheritdoc />
     public partial class ServerTests
     {
+        [Fact]
+        public void Serialization()
+        {
+            ApiException exception;
+
+            try
+            {
+                throw new ApiException();
+            }
+            catch (ApiException ex)
+            {
+                exception = ex;
+            }
+
+            var formatter = new BinaryFormatter();
+            ApiException actual;
+
+            using (var ms = new MemoryStream())
+            {
+                formatter.Serialize(ms, exception);
+                ms.Seek(0, SeekOrigin.Begin);
+                actual = (ApiException)formatter.Deserialize(ms);
+            }
+
+            DeepAssert.Equal(exception, actual, "StackTrace", "TargetSite");
+        }
+
+
         [Fact]
         public async Task HandledException()
         {
@@ -23,7 +55,7 @@ namespace AspNet.WebApi.Server.Tests
 
             Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
 
-            var exception = await GetModelAsync<ApiException>(response);
+            var exception = await GetModelAsync<ApiExceptionModel>(response);
 
             Assert.Equal("EXCEPTION", exception.ReasonCode);
         }
@@ -35,7 +67,7 @@ namespace AspNet.WebApi.Server.Tests
 
             Assert.Equal(HttpStatusCode.GatewayTimeout, response.StatusCode);
 
-            var exception = await GetModelAsync<ApiException>(response);
+            var exception = await GetModelAsync<ApiExceptionModel>(response);
 
             Assert.Equal("GATEWAY_TIMEOUT", exception.ReasonCode);
         }
@@ -47,7 +79,7 @@ namespace AspNet.WebApi.Server.Tests
 
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
 
-            var exception = await GetModelAsync<ApiException>(response);
+            var exception = await GetModelAsync<ApiExceptionModel>(response);
 
             Assert.Equal("BAD_REQUEST", exception.ReasonCode);
         }
@@ -59,7 +91,7 @@ namespace AspNet.WebApi.Server.Tests
 
             Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
 
-            var exception = await GetModelAsync<ApiException>(response);
+            var exception = await GetModelAsync<ApiExceptionModel>(response);
 
             Assert.Equal("AGGREGATE_EXCEPTION", exception.ReasonCode);
         }

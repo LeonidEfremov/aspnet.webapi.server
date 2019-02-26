@@ -1,4 +1,5 @@
 ﻿using AspNet.WebApi.Common.Exceptions;
+using AspNet.WebApi.Server.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
@@ -24,16 +25,18 @@ namespace AspNet.WebApi.Server.Filters
         /// <inheritdoc />
         public async Task OnExceptionAsync(ExceptionContext context)
         {
-            var exception = context.Exception;
+            var contextException = context.Exception;
 
-            _logger.LogError(exception, exception.Message);
+            _logger.LogError(contextException, contextException.Message);
 
             context.ExceptionHandled = true;
 
-            var e = exception is ApiException apiException ? apiException : new ApiException(exception.Message, exception);
+            var apiException = contextException is ApiException e ? e : new ApiException(contextException.Message, contextException);
+            var apiExceptionModel = new ApiExceptionModel(apiException);
+            var result = new JsonResult(apiExceptionModel, _jsonSerializerSettings);
 
-            context.Result = new JsonResult(e, _jsonSerializerSettings) { StatusCode = e.StatusCode };
-            context.HttpContext.Response.StatusCode = e.StatusCode;
+            context.Result = result;
+            context.HttpContext.Response.StatusCode = apiExceptionModel.StatusCode;
 
             await Task.CompletedTask;
         }

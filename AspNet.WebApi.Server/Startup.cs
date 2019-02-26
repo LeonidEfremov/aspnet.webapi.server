@@ -115,9 +115,8 @@ namespace AspNet.WebApi.Server
             settings.DateFormatHandling = DateFormatHandling.IsoDateFormat;
             settings.DateParseHandling = DateParseHandling.DateTime;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-            settings.CheckAdditionalContent = true;
             settings.Formatting = Formatting.None;
-            settings.Converters.Add(new StringEnumConverter());
+            settings.Converters.Add(new StringEnumConverter { NamingStrategy = new DefaultNamingStrategy() });
             settings.StringEscapeHandling = StringEscapeHandling.EscapeHtml;
             settings.NullValueHandling = NullValueHandling.Ignore;
             settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;

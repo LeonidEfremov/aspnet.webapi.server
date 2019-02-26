@@ -1,9 +1,9 @@
-﻿using System;
-using System.Net;
-using AspNet.WebApi.Common.Exceptions;
+﻿using AspNet.WebApi.Common.Exceptions;
 using AspNet.WebApi.Server.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Net;
 
 namespace AspNet.WebApi.Server.Tests.Controllers
 {
@@ -11,7 +11,8 @@ namespace AspNet.WebApi.Server.Tests.Controllers
     public class ExceptionsController : ControllerBase<ExceptionsController>
     {
         [HttpGet("unhandled")]
-        public IActionResult UnhandledException() => throw new Exception();
+        public IActionResult UnhandledException() =>
+            throw new Exception("Common Exception", new StackOverflowException("Stack Overflow Exception"));
 
         [HttpGet("unhandled/api")]
         public IActionResult UnhandledApiException() =>
@@ -45,8 +46,6 @@ namespace AspNet.WebApi.Server.Tests.Controllers
             return Ok();
         }
 
-        public ExceptionsController(ILogger<ExceptionsController> logger) : base(logger)
-        {
-        }
+        public ExceptionsController(ILogger<ExceptionsController> logger) : base(logger) { }
     }
 }
