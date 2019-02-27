@@ -24,8 +24,6 @@ install:
       $version = "$version-$env:APPVEYOR_BUILD_NUMBER"
   - ps: Update-AppveyorBuild -Version $version
 
-platform: Any CPU
-
 configuration: Release
 
 before_build:
