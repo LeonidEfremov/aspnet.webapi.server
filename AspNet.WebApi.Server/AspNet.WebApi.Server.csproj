@@ -8,6 +8,7 @@
     <PackageReference Include="App.Metrics.AspNetCore" Version="3.1.0" />
     <PackageReference Include="App.Metrics.AspNetCore.Health" Version="3.1.0" />
     <PackageReference Include="AspNet.WebApi.Common" Version="1.0.15" />
+    <PackageReference Include="AspNet.WebApi.Exceptions" Version="1.0.1" />
     <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />

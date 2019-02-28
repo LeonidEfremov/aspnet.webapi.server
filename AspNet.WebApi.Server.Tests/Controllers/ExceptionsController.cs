@@ -1,4 +1,4 @@
-﻿using AspNet.WebApi.Common.Exceptions;
+﻿using AspNet.WebApi.Exceptions;
 using AspNet.WebApi.Server.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
