@@ -1,5 +1,5 @@
-﻿using AspNet.WebApi.Common.Exceptions;
-using AspNet.WebApi.Server.Models;
+﻿using AspNet.WebApi.Exceptions;
+using AspNet.WebApi.Exceptions.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;

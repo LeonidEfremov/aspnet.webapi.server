@@ -1,5 +1,5 @@
-﻿using AspNet.WebApi.Common.Exceptions;
-using AspNet.WebApi.Server.Models;
+﻿using AspNet.WebApi.Exceptions;
+using AspNet.WebApi.Exceptions.Models;
 using System.IO;
 using System.Net;
 using System.Runtime.Serialization.Formatters.Binary;

@@ -1,6 +1,6 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
-using AspNet.WebApi.Common.Exceptions;
+using AspNet.WebApi.Exceptions;
 using Xunit;
 
 namespace AspNet.WebApi.Server.Tests
