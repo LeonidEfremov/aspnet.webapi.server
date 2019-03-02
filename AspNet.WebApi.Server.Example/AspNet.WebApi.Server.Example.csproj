@@ -11,13 +11,7 @@
     <ProjectReference Include="..\AspNet.WebApi.Server\AspNet.WebApi.Server.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Content Remove="swagger.json" />
     <Content Update="appsettings.json" CopyToOutputDirectory="Always" />
     <Content Update="nlog.config" CopyToOutputDirectory="Always" />
-    <Content Update="install.bat" CopyToOutputDirectory="Always" />
-    <Content Update="uninstall.bat" CopyToOutputDirectory="Always" />
   </ItemGroup>
-  <Target Name="NSwag" AfterTargets="Build">
-    <Exec Command="$(NSwagExe_Core22) run /variables:ProjectFileName=$(ProjectFileName),InfoVersion=$(PackageVersion),Configuration=$(Configuration)" />
-  </Target>
 </Project>
