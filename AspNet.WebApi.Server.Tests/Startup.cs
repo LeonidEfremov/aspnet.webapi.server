@@ -19,12 +19,16 @@ namespace AspNet.WebApi.Server.Tests
             base.ConfigureServices(services);
         }
 
-        protected override void ConfigureCorsPolicy(CorsPolicyBuilder builder) =>
+        protected override void ConfigureCorsPolicy(CorsPolicyBuilder builder)
+        {
+            base.ConfigureCorsPolicy(builder);
+
             builder
                 .AllowAnyHeader()
                 .AllowAnyMethod()
                 .SetIsOriginAllowedToAllowWildcardSubdomains()
                 .WithOrigins(TestsSetup.Origin)
                 .Build();
+        }
     }
 }
