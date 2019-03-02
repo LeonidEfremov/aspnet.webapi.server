@@ -5,6 +5,9 @@ using App.Metrics.Formatters.Ascii;
 using App.Metrics.Formatters.Json;
 using App.Metrics.Health;
 using App.Metrics.Health.Formatters.Json;
+using AspNet.WebApi.Exceptions;
+using AspNet.WebApi.Exceptions.Mapper;
+using AspNet.WebApi.Exceptions.Mapper.Extensions;
 using AspNet.WebApi.Server.Filters;
 using AspNet.WebApi.Server.Models;
 using Microsoft.AspNetCore.Builder;
@@ -63,6 +66,7 @@ namespace AspNet.WebApi.Server
             .AddMetricsEndpoints(ConfigureMetricsEndpoints, _configuration)
             .AddHealth(ConfigureHealth)
             .AddHealthEndpoints(ConfigureHealthEndpoints, _configuration)
+            .AddExceptionMapper(ConfigureExceptionMapper)
             .AddMvcCore(ConfigureMvc)
             .AddApiExplorer()
             .AddDataAnnotations()
@@ -200,6 +204,13 @@ namespace AspNet.WebApi.Server
         /// <summary>PostProcess Swagger Document.</summary>
         /// <param name="document"><see cref="SwaggerDocument"/></param>
         protected virtual void PostProcess(SwaggerDocument document) { }
+
+        /// <summary>Configure Exception Mapper.</summary>
+        /// <param name="options"><see cref="ExceptionMapperOptions" />.</param>
+        public virtual void ConfigureExceptionMapper(ExceptionMapperOptions options)
+        {
+            options.Map<NullReferenceException, ApiException>();
+        }
 
         private ApiInfo GetApiInfo(Assembly assembly)
         {
