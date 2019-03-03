@@ -210,6 +210,7 @@ namespace AspNet.WebApi.Server
         public virtual void ConfigureExceptionMapper(ExceptionMapperOptions options)
         {
             options.Map<NullReferenceException, ApiException>();
+            options.Map<ArgumentException, ApiException>();
         }
 
         private ApiInfo GetApiInfo(Assembly assembly)
