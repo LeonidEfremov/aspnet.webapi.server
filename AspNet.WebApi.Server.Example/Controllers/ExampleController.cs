@@ -17,19 +17,17 @@ namespace AspNet.WebApi.Server.Example.Controllers
         /// <summary>Simple GET operation.</summary>
         /// <param name="param">Parameter.</param>
         /// <response code="200">Successful operation</response>
-        [HttpGet]
+        [HttpGet("{param}")]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
-        [Route("{param}")]
-        public IActionResult Get([FromRoute]string param)
-        {
-            return Ok(param);
-        }
+        public IActionResult Get([FromRoute]string param) => Ok(param);
 
         /// <summary>Simple POST operation</summary>
         /// <param name="model"><see cref="ExampleModel"/>.</param>
         [HttpPost]
         [ProducesResponseType(typeof(ExampleModel), StatusCodes.Status200OK)]
-        [Route("")]
         public IActionResult Post([FromBody] ExampleModel model) => Ok(model);
+
+        [HttpGet("exceptions")]
+        public IActionResult Get()=> throw new System.ArgumentException();
     }
 }

@@ -85,6 +85,18 @@ namespace AspNet.WebApi.Server.Tests
         }
 
         [Fact]
+        public async Task UnhandledNullReferenceApiException()
+        {
+            var response = await Client.SetDefaultHeaders().GetAsync("/exceptions/unhandled/api/nullreference");
+
+            Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
+
+            var exception = await GetModelAsync<ApiExceptionModel>(response);
+
+            Assert.Equal("EXCEPTION", exception.ReasonCode);
+        }
+
+        [Fact]
         public async Task UnhandledApiExceptionWithContent()
         {
             var response = await Client.SetDefaultHeaders().GetAsync("/exceptions/unhandled/content");

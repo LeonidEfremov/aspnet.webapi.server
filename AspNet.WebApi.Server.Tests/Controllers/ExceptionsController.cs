@@ -19,7 +19,12 @@ namespace AspNet.WebApi.Server.Tests.Controllers
             throw new ApiException((int)HttpStatusCode.GatewayTimeout, "GATEWAY_TIMEOUT", "Gateway Timeout");
 
         [HttpGet("unhandled/api/badrequest")]
-        public IActionResult UnhandledBadRequestApiException() => throw new BadRequestException();
+        public IActionResult UnhandledBadRequestApiException() =>
+            throw new BadRequestException();
+
+        [HttpGet("unhandled/api/nullreference")]
+        public IActionResult UnhandledNullReferenceException() =>
+            throw new NullReferenceException();
 
         [HttpGet("unhandled/content")]
         public IActionResult UnhandledApiExceptionWithContent() =>
