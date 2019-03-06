@@ -8,7 +8,6 @@ namespace AspNet.WebApi.Server.Controllers
     [ApiController]
     [Produces("application/json")]
     public abstract class ControllerBase<T> : ControllerBase
-
     {
         /// <summary>Global logger</summary>
         protected readonly ILogger<T> Logger;
