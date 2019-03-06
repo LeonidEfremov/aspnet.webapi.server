@@ -191,3 +191,4 @@ ModelManifest.xml
 *.nunit.xml
 .packages/
 swagger.json
+coverage.opencover.xml
