@@ -13,6 +13,8 @@ max_jobs: 1
 
 image: Visual Studio 2017
 
+shallow_clone: true
+
 init:
   - git config --global core.autocrlf input
 
@@ -30,7 +32,16 @@ install:
 configuration: Release
 
 before_build:
-  - dotnet sonarscanner begin /k:"%APPVEYOR_PROJECT_NAME%" /v:"%APPVEYOR_BUILD_VERSION%" /o:"%SONAR_ORGANIZATION%" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="%SONAR_LOGIN%" /d:sonar.cs.opencover.reportsPaths="**\coverage.opencover.xml" /d:sonar.coverage.exclusions="**Tests*.cs"
+  - ps: 'if (-Not $env:APPVEYOR_PULL_REQUEST_NUMBER) { &
+      dotnet sonarscanner begin 
+      /k:"$env:APPVEYOR_PROJECT_NAME" 
+      /v:"$env:APPVEYOR_BUILD_VERSION" 
+      /o:"$env:SONAR_ORGANIZATION" 
+      /d:sonar.host.url="https://sonarcloud.io" 
+      /d:sonar.login="$env:SONAR_LOGIN" 
+      /d:sonar.cs.opencover.reportsPaths="**\coverage.opencover.xml" 
+      /d:sonar.coverage.exclusions="**Tests*.cs"
+    }'
 
 build_script:
   - dotnet build --configuration %CONFIGURATION%
@@ -42,8 +53,9 @@ test_script:
   - dotnet test --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
 
 after_test:
-  - dotnet sonarscanner end /d:sonar.login="%SONAR_LOGIN%"
-
+  - ps: 'if (-Not $env:APPVEYOR_PULL_REQUEST_NUMBER) { & 
+      dotnet sonarscanner end /d:sonar.login="$env:SONAR_LOGIN"
+    }'
 artifacts:
   - path: '.\.packages\*.nupkg'
     name: 'nupkg'
@@ -64,3 +76,11 @@ deploy:
     prerelease: false
     on:
       branch: master
+
+for:
+  -
+    branches:
+      except:
+        - master
+
+    deploy: off

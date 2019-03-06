@@ -1,8 +1,11 @@
-﻿using AspNet.WebApi.Server.Tests.Providers;
+﻿using AspNet.WebApi.Exceptions;
+using AspNet.WebApi.Exceptions.Mapper;
+using AspNet.WebApi.Server.Tests.Providers;
 using AspNet.WebApi.Server.Tests.Providers.Interfaces;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace AspNet.WebApi.Server.Tests
 {
@@ -29,6 +32,11 @@ namespace AspNet.WebApi.Server.Tests
                 .SetIsOriginAllowedToAllowWildcardSubdomains()
                 .WithOrigins(TestsSetup.Origin)
                 .Build();
+        }
+
+        protected override void ConfigureExceptionMapper(ExceptionMapperOptions options)
+        {
+            options.Map<ArgumentOutOfRangeException, BadRequestException>();
         }
     }
 }

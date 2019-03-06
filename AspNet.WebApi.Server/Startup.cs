@@ -27,7 +27,10 @@ using NSwag.AspNetCore;
 using NSwag.SwaggerGeneration.WebApi;
 using System;
 using System.Globalization;
+using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace AspNet.WebApi.Server
 {
@@ -68,9 +71,25 @@ namespace AspNet.WebApi.Server
             .AddHealthEndpoints(ConfigureHealthEndpoints, _configuration)
             .AddExceptionMapper(ConfigureExceptionMapper)
             .AddMvcCore(ConfigureMvc)
+            .ConfigureApiBehaviorOptions(ConfigureApiBehavior)
+            .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
             .AddApiExplorer()
             .AddDataAnnotations()
             .AddJsonFormatters(ConfigureJsonSerializer);
+
+        /// <summary>Setup Api Behavior.</summary>
+        /// <param name="options"><see cref="ApiBehaviorOptions"/>.</param>
+        protected virtual void ConfigureApiBehavior(ApiBehaviorOptions options)
+        {
+            options.InvalidModelStateResponseFactory = InvalidModelStateResponseFactory;
+        }
+
+        /// <summary>Handle BadRequest action.</summary>
+        /// <param name="context"><see cref="ActionContext"/>.</param>
+        protected virtual IActionResult InvalidModelStateResponseFactory(ActionContext context)
+        {
+            return new BadRequestObjectResult(context.ModelState);
+        }
 
         /// <summary>Configure the HTTP request pipeline.</summary>
         /// <param name="app"><see cref="IApplicationBuilder"/>.</param>
@@ -78,6 +97,10 @@ namespace AspNet.WebApi.Server
             .UseCors(ConfigureCorsPolicy)
             .UseResponseCompression()
             .UseResponseCaching()
+            .UseExceptionHandler(new ExceptionHandlerOptions
+            {
+                ExceptionHandler = ExceptionHandler
+            })
             .UseMvc(ConfigureRoutes)
             .UseHealthAllEndpoints()
             .UseMetricsAllEndpoints()
@@ -87,9 +110,15 @@ namespace AspNet.WebApi.Server
             .UseSwaggerUi3(ConfigureSwaggerUi3)
             .UseWelcomePage(ConfigureWelcomePage());
 
+        private async Task ExceptionHandler(HttpContext context)
+        {
+            await context.Response.WriteAsync("DDD");
+        }
+
         /// <summary>Setup Welcome page.</summary>
         /// <returns><see cref="WelcomePageOptions"/>.</returns>
-        protected virtual WelcomePageOptions ConfigureWelcomePage() => new WelcomePageOptions { Path = "/" };
+        protected virtual WelcomePageOptions ConfigureWelcomePage() =>
+            new WelcomePageOptions { Path = "/" };
 
         /// <summary>Setup CORS policies.</summary>
         /// <param name="builder"><see cref="CorsPolicyBuilder"/>.</param>
@@ -106,7 +135,7 @@ namespace AspNet.WebApi.Server
         {
             var filters = options.Filters;
 
-            filters.Add<BadRequestAsyncFilter>();
+            //filters.Add<BadRequestAsyncFilter>();
             filters.Add<NullResultFilter>();
             filters.Add<ExceptionAsyncFilter>();
         }
@@ -207,11 +236,7 @@ namespace AspNet.WebApi.Server
 
         /// <summary>Configure Exception Mapper.</summary>
         /// <param name="options"><see cref="ExceptionMapperOptions" />.</param>
-        public virtual void ConfigureExceptionMapper(ExceptionMapperOptions options)
-        {
-            options.Map<NullReferenceException, ApiException>();
-            options.Map<ArgumentException, ApiException>();
-        }
+        protected virtual void ConfigureExceptionMapper(ExceptionMapperOptions options) { }
 
         private ApiInfo GetApiInfo(Assembly assembly)
         {

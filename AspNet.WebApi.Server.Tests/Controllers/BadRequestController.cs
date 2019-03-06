@@ -1,4 +1,3 @@
-using System;
 using AspNet.WebApi.Server.Controllers;
 using AspNet.WebApi.Server.Tests.Models;
 using Microsoft.AspNetCore.Mvc;

@@ -1,0 +1,10 @@
+{
+    "files.exclude": {
+        ".vs*": true,
+        ".git*": true,
+        "**/*.user": true,
+        "**/bin/": true,
+        "**/obj/": true,
+        "**/coverage.opencover.xml": true
+    }
+}
