@@ -21,12 +21,13 @@ namespace AspNet.WebApi.Server.Example.Controllers
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public IActionResult Get([FromRoute]string param) => Ok(param);
 
-        /// <summary>Simple POST operation</summary>
+        /// <summary>Simple POST operation.</summary>
         /// <param name="model"><see cref="ExampleModel"/>.</param>
         [HttpPost]
         [ProducesResponseType(typeof(ExampleModel), StatusCodes.Status200OK)]
         public IActionResult Post([FromBody] ExampleModel model) => Ok(model);
 
+        /// <summary>Simple operation with ArgumentException.</summary>
         [HttpGet("exceptions")]
         public IActionResult Get()=> throw new System.ArgumentException();
     }

@@ -33,7 +33,8 @@
             "args": [
                 "test",
                 "/p:CollectCoverage=true",
-                "/p:CoverletOutputFormat=opencover"
+                "/p:CoverletOutputFormat=opencover",
+                "/p:Exclude=[xunit*]*"
             ],
             "problemMatcher": "$msCompile"
         }

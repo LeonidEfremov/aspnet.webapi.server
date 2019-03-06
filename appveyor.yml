@@ -50,7 +50,7 @@ after_build:
   - dotnet pack --no-build
 
 test_script:
-  - dotnet test --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+  - dotnet test --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:Exclude=[xunit*]*
 
 after_test:
   - ps: 'if (-Not $env:APPVEYOR_PULL_REQUEST_NUMBER) { & 
