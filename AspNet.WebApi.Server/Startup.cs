@@ -5,9 +5,6 @@ using App.Metrics.Formatters.Ascii;
 using App.Metrics.Formatters.Json;
 using App.Metrics.Health;
 using App.Metrics.Health.Formatters.Json;
-using AspNet.WebApi.Exceptions;
-using AspNet.WebApi.Exceptions.Mapper;
-using AspNet.WebApi.Exceptions.Mapper.Extensions;
 using AspNet.WebApi.Server.Filters;
 using AspNet.WebApi.Server.Models;
 using Microsoft.AspNetCore.Builder;
@@ -27,10 +24,7 @@ using NSwag.AspNetCore;
 using NSwag.SwaggerGeneration.WebApi;
 using System;
 using System.Globalization;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 
 namespace AspNet.WebApi.Server
 {
@@ -69,27 +63,11 @@ namespace AspNet.WebApi.Server
             .AddMetricsEndpoints(ConfigureMetricsEndpoints, _configuration)
             .AddHealth(ConfigureHealth)
             .AddHealthEndpoints(ConfigureHealthEndpoints, _configuration)
-            .AddExceptionMapper(ConfigureExceptionMapper)
             .AddMvcCore(ConfigureMvc)
-            .ConfigureApiBehaviorOptions(ConfigureApiBehavior)
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
             .AddApiExplorer()
             .AddDataAnnotations()
             .AddJsonFormatters(ConfigureJsonSerializer);
-
-        /// <summary>Setup Api Behavior.</summary>
-        /// <param name="options"><see cref="ApiBehaviorOptions"/>.</param>
-        protected virtual void ConfigureApiBehavior(ApiBehaviorOptions options)
-        {
-            options.InvalidModelStateResponseFactory = InvalidModelStateResponseFactory;
-        }
-
-        /// <summary>Handle BadRequest action.</summary>
-        /// <param name="context"><see cref="ActionContext"/>.</param>
-        protected virtual IActionResult InvalidModelStateResponseFactory(ActionContext context)
-        {
-            return new BadRequestObjectResult(context.ModelState);
-        }
 
         /// <summary>Configure the HTTP request pipeline.</summary>
         /// <param name="app"><see cref="IApplicationBuilder"/>.</param>
@@ -97,10 +75,6 @@ namespace AspNet.WebApi.Server
             .UseCors(ConfigureCorsPolicy)
             .UseResponseCompression()
             .UseResponseCaching()
-            .UseExceptionHandler(new ExceptionHandlerOptions
-            {
-                ExceptionHandler = ExceptionHandler
-            })
             .UseMvc(ConfigureRoutes)
             .UseHealthAllEndpoints()
             .UseMetricsAllEndpoints()
@@ -109,11 +83,6 @@ namespace AspNet.WebApi.Server
             .UseReDoc(ConfigureReDoc)
             .UseSwaggerUi3(ConfigureSwaggerUi3)
             .UseWelcomePage(ConfigureWelcomePage());
-
-        private async Task ExceptionHandler(HttpContext context)
-        {
-            await context.Response.WriteAsync("DDD");
-        }
 
         /// <summary>Setup Welcome page.</summary>
         /// <returns><see cref="WelcomePageOptions"/>.</returns>
@@ -137,7 +106,7 @@ namespace AspNet.WebApi.Server
 
             //filters.Add<BadRequestAsyncFilter>();
             filters.Add<NullResultFilter>();
-            filters.Add<ExceptionAsyncFilter>();
+            //filters.Add<ExceptionAsyncFilter>();
         }
 
         /// <summary>Setup JsonSerializer settings.</summary>
@@ -233,10 +202,6 @@ namespace AspNet.WebApi.Server
         /// <summary>PostProcess Swagger Document.</summary>
         /// <param name="document"><see cref="SwaggerDocument"/></param>
         protected virtual void PostProcess(SwaggerDocument document) { }
-
-        /// <summary>Configure Exception Mapper.</summary>
-        /// <param name="options"><see cref="ExceptionMapperOptions" />.</param>
-        protected virtual void ConfigureExceptionMapper(ExceptionMapperOptions options) { }
 
         private ApiInfo GetApiInfo(Assembly assembly)
         {

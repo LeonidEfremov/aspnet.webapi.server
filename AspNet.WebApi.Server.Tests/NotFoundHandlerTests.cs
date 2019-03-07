@@ -1,7 +1,8 @@
-﻿using System.Net;
-using System.Threading.Tasks;
-using AspNet.WebApi.Exceptions;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Net;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace AspNet.WebApi.Server.Tests
@@ -41,9 +42,9 @@ namespace AspNet.WebApi.Server.Tests
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
 
             var body = await response.Content.ReadAsStringAsync();
-            var exception = JsonConvert.DeserializeObject<ApiException>(body);
+            var exception = JsonConvert.DeserializeObject<ProblemDetails>(body);
 
-            Assert.Equal("NOT_FOUND", exception.ReasonCode);
+            Assert.Equal(StatusCodes.Status404NotFound, exception.Status);
         }
     }
 }
