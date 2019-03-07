@@ -1,6 +1,6 @@
-﻿using AspNet.WebApi.Exceptions;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 
 namespace AspNet.WebApi.Server.Controllers
 {
@@ -20,10 +20,10 @@ namespace AspNet.WebApi.Server.Controllers
 
         /// <inheritdoc />
         public override NotFoundObjectResult NotFound(object value) =>
-            base.NotFound(new NotFoundException(value.ToString()));
+            base.NotFound(new Exception(value.ToString()));
 
         /// <inheritdoc />
         public override BadRequestObjectResult BadRequest(object error) =>
-            base.BadRequest(new BadRequestException(error.ToString()));
+            base.BadRequest(new Exception(error.ToString()));
     }
 }

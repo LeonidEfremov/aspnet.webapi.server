@@ -1,4 +1,5 @@
-﻿using AspNet.WebApi.Exceptions.Models;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -16,12 +17,12 @@ namespace AspNet.WebApi.Server.Tests
 
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
 
-            var exception = await GetModelAsync<ApiExceptionModel>(response);
+            var exception = await GetModelAsync<ProblemDetails>(response);
 
-            Assert.Equal("BAD_REQUEST", exception.ReasonCode);
+            Assert.Equal(StatusCodes.Status400BadRequest, exception.Status);
         }
 
-        [Fact(Skip = "NTBD")]
+        [Fact]
         public async Task BadRequestBinding()
         {
             var model = new StringContent("{id:\"1.2\",title:1234567,flag:null}");
@@ -30,9 +31,9 @@ namespace AspNet.WebApi.Server.Tests
 
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
 
-            var exception = await GetModelAsync<ApiExceptionModel>(response);
+            var exception = await GetModelAsync<ValidationProblemDetails>(response);
 
-            Assert.Equal("BAD_REQUEST", exception.Message);
+            Assert.Equal(StatusCodes.Status400BadRequest, exception.Status);
         }
     }
 }
