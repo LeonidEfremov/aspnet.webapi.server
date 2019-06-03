@@ -14,7 +14,7 @@
     <PackageVersion>$(Version)</PackageVersion>
     <VersionSuffix>$(VersionSuffix)</VersionSuffix>
     <Company></Company>
-    <Authors>Loenid Efremov</Authors>
+    <Authors>Leonid Efremov</Authors>
     <Description>API Service base library for API Services.</Description>
     <PackageTags>webapi;dotnet;server;swagger</PackageTags>
     <IncludeSymbols>False</IncludeSymbols>
@@ -26,7 +26,6 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis" Version="3.1.0" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.NetCore.Analyzers" Version="2.9.1" PrivateAssets="All" />
     <PackageReference Include="Microsoft.NetCore.Analyzers" Version="2.9.2" PrivateAssets="All" />
   </ItemGroup>
 </Project>
