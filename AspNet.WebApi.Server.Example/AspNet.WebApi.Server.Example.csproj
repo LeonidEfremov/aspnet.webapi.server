@@ -6,7 +6,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="NSwag.MSBuild" Version="13.0.6" PrivateAssets="all" />
-    <PackageReference Include="NLog.Web.AspNetCore" Version="4.8.4" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="4.8.5" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AspNet.WebApi.Server\AspNet.WebApi.Server.csproj" />
