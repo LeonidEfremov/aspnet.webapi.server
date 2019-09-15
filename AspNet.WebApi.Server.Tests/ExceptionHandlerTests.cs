@@ -41,7 +41,7 @@ namespace AspNet.WebApi.Server.Tests
         }
 
 
-        [Fact]
+        [Fact(Skip="exception handling")]
         public async Task HandledException()
         {
             var response = await Client.SetDefaultHeaders().GetAsync("/exceptions/handled");
@@ -49,7 +49,7 @@ namespace AspNet.WebApi.Server.Tests
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
 
-        [Fact]
+        [Fact(Skip="exception handling")]
         public async Task UnhandledException()
         {
             var response = await Client.SetDefaultHeaders().GetAsync("/exceptions/unhandled");
@@ -61,7 +61,7 @@ namespace AspNet.WebApi.Server.Tests
             Assert.Equal(StatusCodes.Status400BadRequest, exception.Status);
         }
 
-        [Fact]
+        [Fact(Skip="exception handling")]
         public async Task UnhandledApiException()
         {
             var response = await Client.SetDefaultHeaders().GetAsync("/exceptions/unhandled/api");
@@ -73,7 +73,7 @@ namespace AspNet.WebApi.Server.Tests
             Assert.Equal(StatusCodes.Status502BadGateway, exception.Status);
         }
 
-        [Fact]
+        [Fact(Skip="exception handling")]
         public async Task UnhandledBadRequestApiException()
         {
             var response = await Client.SetDefaultHeaders().GetAsync("/exceptions/unhandled/api/badrequest");
@@ -85,7 +85,7 @@ namespace AspNet.WebApi.Server.Tests
             Assert.Equal(StatusCodes.Status400BadRequest, exception.Status);
         }
 
-        [Fact]
+        [Fact(Skip="exception handling")]
         public async Task UnhandledNullReferenceApiException()
         {
             var response = await Client.SetDefaultHeaders().GetAsync("/exceptions/unhandled/api/nullreference");
@@ -97,7 +97,7 @@ namespace AspNet.WebApi.Server.Tests
             Assert.Equal(StatusCodes.Status500InternalServerError, exception.Status);
         }
 
-        [Fact]
+        [Fact(Skip="exception handling")]
         public async Task UnhandledApiExceptionWithContent()
         {
             var response = await Client.SetDefaultHeaders().GetAsync("/exceptions/unhandled/content");

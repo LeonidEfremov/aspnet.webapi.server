@@ -54,7 +54,7 @@ namespace AspNet.WebApi.Server.Tests
             DeepAssert.Equal(expected, actual, "Extensions");
         }
 
-        [Fact]
+        [Fact(Skip="exception handling")]
         public async Task IgnoreAttributeModel()
         {
             var expected = "{\"param\":[\"The value \\u0027abc\\u0027 is not valid.\"]}";

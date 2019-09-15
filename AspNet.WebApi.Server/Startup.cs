@@ -21,7 +21,7 @@ using Newtonsoft.Json.Serialization;
 using NJsonSchema;
 using NSwag;
 using NSwag.AspNetCore;
-using NSwag.SwaggerGeneration.WebApi;
+using NSwag.Generation.AspNetCore;
 using System;
 using System.Globalization;
 using System.Reflection;
@@ -58,7 +58,7 @@ namespace AspNet.WebApi.Server
             .AddResponseCompression(ConfigureResponseCompression)
             .AddResponseCaching(ConfigureResponseCaching)
             .AddCors(ConfigureCors)
-            .AddOpenApiDocument(ConfigureSwaggerDocument)
+            .AddOpenApiDocument(ConfigureOpenApiDocument)
             .AddMetrics(ConfigureMetrics)
             .AddMetricsEndpoints(ConfigureMetricsEndpoints, _configuration)
             .AddHealth(ConfigureHealth)
@@ -79,8 +79,8 @@ namespace AspNet.WebApi.Server
             .UseHealthAllEndpoints()
             .UseMetricsAllEndpoints()
             .UseMetricsAllMiddleware()
-            .UseSwagger(ConfigureSwagger)
-            .UseReDoc(ConfigureReDoc)
+            .UseOpenApi(ConfigureOpenApi)
+            //.UseReDoc(ConfigureReDoc)
             .UseSwaggerUi3(ConfigureSwaggerUi3)
             .UseWelcomePage(ConfigureWelcomePage());
 
@@ -164,20 +164,20 @@ namespace AspNet.WebApi.Server
         /// <param name="options"><see cref="ResponseCompressionOptions" />.</param>
         protected virtual void ConfigureResponseCompression(ResponseCompressionOptions options) { }
 
-        /// <summary>Configure ReDoc.</summary>
-        /// <param name="settings"><see cref="SwaggerReDocSettings{WebApiToSwaggerGeneratorSettings}"/></param>
-        protected virtual void ConfigureReDoc(SwaggerReDocSettings<WebApiToSwaggerGeneratorSettings> settings)
-        {
-            settings.Path = "/redoc";
-        }
+        // /// <summary>Configure ReDoc.</summary>
+        // /// <param name="settings"><see cref="SwaggerReDocSettings"/></param>
+        // protected virtual void ConfigureReDoc(OpenApiReDocSettings settings)
+        // {
+        //     settings.Path = "/redoc";
+        // }
 
         /// <summary>Configure SwaggerUI API Interface.</summary>
-        /// <param name="settings"><see cref="SwaggerDocumentMiddlewareSettings"/>.</param>
-        protected virtual void ConfigureSwagger(SwaggerDocumentMiddlewareSettings settings) { }
+        /// <param name="settings"><see cref="OpenApiDocumentMiddlewareSettings"/>.</param>
+        protected virtual void ConfigureOpenApi(OpenApiDocumentMiddlewareSettings settings) { }
 
         /// <summary>Configure SwaggerUi3.</summary>
-        /// <param name="settings"><see cref="SwaggerUi3Settings{WebApiToSwaggerGeneratorSettings}"/></param>
-        protected virtual void ConfigureSwaggerUi3(SwaggerUi3Settings<WebApiToSwaggerGeneratorSettings> settings)
+        /// <param name="settings"><see cref="SwaggerUi3Settings"/></param>
+        protected virtual void ConfigureSwaggerUi3(SwaggerUi3Settings settings)
         {
             settings.Path = "/swagger";
             settings.DefaultModelsExpandDepth = -1;
@@ -185,9 +185,9 @@ namespace AspNet.WebApi.Server
         }
 
         /// <summary>Configure SwaggerDocument.</summary>
-        /// <param name="settings"><see cref="SwaggerDocumentSettings"/></param>
+        /// <param name="settings"><see cref="AspNetCoreOpenApiDocumentGeneratorSettings"/></param>
         /// <param name="services"><see cref="IServiceProvider"/></param>
-        protected virtual void ConfigureSwaggerDocument(SwaggerDocumentSettings settings, IServiceProvider services)
+        protected virtual void ConfigureOpenApiDocument(AspNetCoreOpenApiDocumentGeneratorSettings settings, IServiceProvider services)
         {
             var informationalVersion = _assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()
                 .InformationalVersion;
@@ -200,8 +200,10 @@ namespace AspNet.WebApi.Server
         }
 
         /// <summary>PostProcess Swagger Document.</summary>
-        /// <param name="document"><see cref="SwaggerDocument"/></param>
-        protected virtual void PostProcess(SwaggerDocument document) { }
+        /// <param name="document"><see cref="OpenApiDocument"/></param>
+        protected virtual void PostProcess(OpenApiDocument document) {
+
+         }
 
         private ApiInfo GetApiInfo(Assembly assembly)
         {
