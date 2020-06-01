@@ -10,7 +10,7 @@
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" />
     <PackageReference Include="xUnit.Asserts.Compare" Version="1.0.0.4" />
-    <PackageReference Include="coverlet.msbuild" Version="2.8.1" />
+    <PackageReference Include="coverlet.msbuild" Version="2.9.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AspNet.WebApi.Server\AspNet.WebApi.Server.csproj" />
