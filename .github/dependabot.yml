@@ -1,0 +1,18 @@
+version: 2
+updates:
+- package-ecosystem: nuget
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "02:00"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: Microsoft.NET.Test.Sdk
+    versions:
+    - 16.9.4
+  - dependency-name: NSwag.MSBuild
+    versions:
+    - 13.10.2
+  - dependency-name: NSwag.AspNetCore
+    versions:
+    - 13.10.2
