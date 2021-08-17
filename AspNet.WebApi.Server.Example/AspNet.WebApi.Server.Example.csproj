@@ -5,8 +5,8 @@
     <SonarQubeExclude>True</SonarQubeExclude>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="NSwag.MSBuild" Version="13.10.1" PrivateAssets="all" />
-    <PackageReference Include="NLog.Web.AspNetCore" Version="4.10.0" />
+    <PackageReference Include="NSwag.MSBuild" Version="13.13.2" PrivateAssets="all" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="4.13.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AspNet.WebApi.Server\AspNet.WebApi.Server.csproj" />
