@@ -11,15 +11,15 @@ skip_branch_with_pr: true
 
 max_jobs: 1
 
-image: Visual Studio 2019
+image: Ubuntu
 
-shallow_clone: true
+shallow_clone: false
 
 init:
   - git config --global core.autocrlf input
 
 install:
-  - dotnet tool install --global dotnet-sonarscanner
+  - dotnet tool install --global dotnet-sonarscanner --version 5.2.2
   - ps: |
       $content = Get-Content -Path Directory.Build.props
       $regex = New-Object System.Text.RegularExpressions.Regex ('()([\d]+.[\d]+.[\d]+)(<\/VersionPrefix>)', [System.Text.RegularExpressions.RegexOptions]::MultiLine)
@@ -32,6 +32,7 @@ install:
 configuration: Release
 
 before_build:
+  - ps: $env:JAVA_HOME=$env:JAVA_HOME_15_X64
   - ps: 'if (-Not $env:APPVEYOR_PULL_REQUEST_NUMBER) { &
       dotnet sonarscanner begin 
       /k:"$env:APPVEYOR_PROJECT_NAME" 
@@ -39,12 +40,12 @@ before_build:
       /o:"$env:SONAR_ORGANIZATION" 
       /d:sonar.host.url="https://sonarcloud.io" 
       /d:sonar.login="$env:SONAR_LOGIN" 
-      /d:sonar.cs.opencover.reportsPaths="**\coverage.opencover.xml" 
+      /d:sonar.cs.opencover.reportsPaths="**\coverage.*.opencover.xml" 
       /d:sonar.coverage.exclusions="**Tests*.cs"
     }'
 
 build_script:
-  - dotnet build --configuration %CONFIGURATION%
+  - dotnet build # --configuration %CONFIGURATION%
 
 after_build:
   - dotnet pack --no-build
