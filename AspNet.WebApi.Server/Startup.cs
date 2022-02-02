@@ -1,11 +1,4 @@
-﻿using App.Metrics;
-using App.Metrics.AspNetCore.Endpoints;
-using App.Metrics.AspNetCore.Health.Endpoints;
-using App.Metrics.Formatters.Ascii;
-using App.Metrics.Formatters.Json;
-using App.Metrics.Health;
-using App.Metrics.Health.Formatters.Json;
-using AspNet.WebApi.Server.Filters;
+﻿using AspNet.WebApi.Server.Filters;
 using AspNet.WebApi.Server.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
@@ -59,15 +52,9 @@ namespace AspNet.WebApi.Server
             .AddResponseCaching(ConfigureResponseCaching)
             .AddCors(ConfigureCors)
             .AddOpenApiDocument(ConfigureOpenApiDocument)
-            .AddMetrics(ConfigureMetrics)
-            .AddMetricsEndpoints(ConfigureMetricsEndpoints, _configuration)
-            .AddHealth(ConfigureHealth)
-            .AddHealthEndpoints(ConfigureHealthEndpoints, _configuration)
             .AddMvcCore(ConfigureMvc)
-            .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
             .AddApiExplorer()
-            .AddDataAnnotations()
-            .AddJsonFormatters(ConfigureJsonSerializer);
+            .AddDataAnnotations();
 
         /// <summary>Configure the HTTP request pipeline.</summary>
         /// <param name="app"><see cref="IApplicationBuilder"/>.</param>
@@ -76,11 +63,8 @@ namespace AspNet.WebApi.Server
             .UseResponseCompression()
             .UseResponseCaching()
             .UseMvc(ConfigureRoutes)
-            .UseHealthAllEndpoints()
-            .UseMetricsAllEndpoints()
-            .UseMetricsAllMiddleware()
+            .UseRouting()
             .UseOpenApi(ConfigureOpenApi)
-            //.UseReDoc(ConfigureReDoc)
             .UseSwaggerUi3(ConfigureSwaggerUi3)
             .UseWelcomePage(ConfigureWelcomePage());
 
@@ -107,6 +91,8 @@ namespace AspNet.WebApi.Server
             //filters.Add<BadRequestAsyncFilter>();
             filters.Add<NullResultFilter>();
             //filters.Add<ExceptionAsyncFilter>();
+            
+            options.EnableEndpointRouting = false;
         }
 
         /// <summary>Setup JsonSerializer settings.</summary>
@@ -124,30 +110,6 @@ namespace AspNet.WebApi.Server
             settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
         }
 
-        /// <summary>Configure Metrics.</summary>
-        /// <param name="builder"><see cref="IMetricsBuilder" />.</param>
-        protected virtual void ConfigureMetrics(IMetricsBuilder builder)
-        {
-            builder.OutputEnvInfo.Using<EnvInfoTextOutputFormatter>();
-            builder.OutputMetrics.Using<MetricsJsonOutputFormatter>();
-            builder.OutputMetrics.Using<MetricsTextOutputFormatter>();
-        }
-
-        /// <summary>Configure Health.</summary>
-        /// <param name="builder"><see cref="IHealthBuilder" />.</param>
-        protected virtual void ConfigureHealth(IHealthBuilder builder)
-        {
-            builder.OutputHealth.Using<HealthStatusJsonOutputFormatter>();
-        }
-
-        /// <summary>Configure MetricsEndpoints.</summary>
-        /// <param name="options"><see cref="MetricEndpointsOptions"/></param>
-        protected virtual void ConfigureMetricsEndpoints(MetricEndpointsOptions options) { }
-
-        /// <summary>Configure HealthEndpoints.</summary>
-        /// <param name="options"><see cref="HealthEndpointsOptions"/></param>
-        protected virtual void ConfigureHealthEndpoints(HealthEndpointsOptions options) { }
-
         /// <summary>Configure CORS.</summary>
         /// <param name="options"><see cref="CorsOptions" />.</param>
         protected virtual void ConfigureCors(CorsOptions options) { }
@@ -163,13 +125,6 @@ namespace AspNet.WebApi.Server
         /// <summary>Configure ResponseCompression.</summary>
         /// <param name="options"><see cref="ResponseCompressionOptions" />.</param>
         protected virtual void ConfigureResponseCompression(ResponseCompressionOptions options) { }
-
-        // /// <summary>Configure ReDoc.</summary>
-        // /// <param name="settings"><see cref="SwaggerReDocSettings"/></param>
-        // protected virtual void ConfigureReDoc(OpenApiReDocSettings settings)
-        // {
-        //     settings.Path = "/redoc";
-        // }
 
         /// <summary>Configure SwaggerUI API Interface.</summary>
         /// <param name="settings"><see cref="OpenApiDocumentMiddlewareSettings"/>.</param>
