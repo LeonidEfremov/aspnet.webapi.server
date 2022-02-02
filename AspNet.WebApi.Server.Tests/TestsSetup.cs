@@ -36,8 +36,8 @@ namespace AspNet.WebApi.Server.Tests
             _server = new TestServer(webHostBuilder);
             Client = _server.CreateClient();
 
-            var mvcJsonOptions = (IOptions<MvcJsonOptions>)_server.Host.Services.GetService(typeof(IOptions<MvcJsonOptions>));
-            JsonSerializerSettings = mvcJsonOptions.Value.SerializerSettings;
+            //var mvcJsonOptions = (IOptions<MvcJsonOptions>)_server.Host.Services.GetService(typeof(IOptions<MvcJsonOptions>));
+            //JsonSerializerSettings = mvcJsonOptions.Value.SerializerSettings;
         }
 
         public void Dispose()

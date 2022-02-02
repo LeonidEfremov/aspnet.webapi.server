@@ -12,9 +12,9 @@ namespace AspNet.WebApi.Server.Tests
 
             Assert.Equal("AspNet.WebApi.Server.Tests", apiInfo.AssemblyName);
             Assert.Equal("API Service base library for API Services.", apiInfo.Description);
-            Assert.Equal("1.2.0.0", apiInfo.Version.ToString());
+            Assert.Equal("1.5.0.0", apiInfo.Version.ToString());
             Assert.Equal("AspNet.WebApi.Server.Tests.v1", apiInfo.ServiceName);
-            Assert.Equal("1.2", apiInfo.ApiVersion);
+            Assert.Equal("1.5", apiInfo.ApiVersion);
             Assert.Equal("AspNet.WebApi.Server.Tests", apiInfo.DisplayName);
         }
     }

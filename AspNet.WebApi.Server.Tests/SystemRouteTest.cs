@@ -9,11 +9,6 @@ namespace AspNet.WebApi.Server.Tests
     {
         [Theory]
         [InlineData("/")]
-        [InlineData("/health")]
-        [InlineData("/env")]
-        [InlineData("/ping")]
-        [InlineData("/metrics")]
-        [InlineData("/metrics-text")]
         [InlineData("/swagger/index.html")]
         [InlineData("/swagger/v1/swagger.json")]
         public async Task SystemRoutes(string url)
