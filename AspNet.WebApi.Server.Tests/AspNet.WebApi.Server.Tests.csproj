@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<NoWarn>CS1591;</NoWarn>
@@ -11,7 +11,7 @@
 		<PackageReference Include="xunit" Version="2.4.2" />
 		<PackageReference Include="xunit.runner.visualstudio" Version="2.4.5" />
 		<PackageReference Include="xUnit.Asserts.Compare" Version="1.0.0.5" />
-		<PackageReference Include="coverlet.msbuild" Version="3.2.0" />
+		<PackageReference Include="coverlet.msbuild" Version="6.0.0" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\AspNet.WebApi.Server\AspNet.WebApi.Server.csproj" />
